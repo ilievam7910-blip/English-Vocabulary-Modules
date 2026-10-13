@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 · Getting to know you</title>
+<style>
+:root{
+  --sky:#1b4f72; --sky2:#2a6f9e; --sand:#f7f3e8; --paper:#fffdf8;
+  --gold:#e8a33d; --gold-l:#fbe9cd; --ink:#22201c; --mut:#6f6a60;
+  --ok:#2e7d55; --no:#b23b2e; --line:#e3ddcd;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sand);color:var(--ink);
+  font:17px/1.65 "Segoe UI",Roboto,-apple-system,Arial,sans-serif}
+header{background:var(--sky);color:#fff;padding:28px 18px 24px;border-bottom:5px solid var(--gold)}
+header .in{max-width:900px;margin:0 auto}
+.kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font:700 30px/1.2 Georgia,serif;margin:8px 0 4px}
+h1 small{display:block;font:400 17px/1.4 Georgia,serif;color:#cfe0ec;margin-top:6px}
+
+nav{background:var(--sky2);position:sticky;top:0;z-index:20;
+  display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch}
+nav button{flex:0 0 auto;background:none;border:none;color:#dbe8f1;
+  padding:13px 17px;font:600 15px/1 inherit;cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent}
+nav button.on{color:#fff;border-bottom-color:var(--gold);background:rgba(0,0,0,.14)}
+
+.wrap{max-width:900px;margin:0 auto;padding:22px 16px 90px}
+section{display:none} section.on{display:block}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  padding:20px 18px;margin-bottom:18px}
+h2{font:700 21px/1.3 Georgia,serif;margin:0 0 4px}
+.hint{color:var(--mut);font-size:15px;margin:6px 0 16px}
+.tag{display:inline-block;background:var(--gold-l);border:1px solid #e5c894;color:#6b5100;
+  font-size:12px;padding:2px 9px;border-radius:12px;margin:0 6px 6px 0}
+
+/* карти */
+.flip{perspective:1100px;margin-bottom:12px}
+.fin{position:relative;transition:transform .5s;transform-style:preserve-3d;min-height:170px}
+.flip.f .fin{transform:rotateY(180deg)}
+.fs{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);
+  border-radius:12px;padding:20px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;background:#fff}
+.fb{transform:rotateY(180deg);background:var(--gold-l);border-color:#e5c894}
+.fw{font:700 30px/1.2 Georgia,serif}
+.fl{margin-top:8px;font-size:13px;color:var(--mut)}
+.fbg{font:600 21px/1.3 inherit;margin-bottom:8px}
+.fex{font-size:15px;color:#5a5348;font-style:italic;max-width:90%}
+.ctr{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:6px}
+.cnt{font-size:14px;color:var(--mut);min-width:66px;text-align:center}
+
+/* задачи */
+.q{padding:13px 0;border-top:1px dashed var(--line)}
+.q:first-of-type{border-top:none}
+.qt{font-weight:600;margin-bottom:9px}
+.qt .n{color:var(--mut);font-weight:400;margin-right:6px}
+.opts{display:grid;gap:7px}
+label.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;
+  border:1px solid var(--line);border-radius:9px;cursor:pointer;background:#fff}
+label.opt:hover{background:#fbf8ef}
+label.opt input{accent-color:var(--sky)}
+.opt.r{border-color:var(--ok);background:#eaf5ef}
+.opt.w{border-color:var(--no);background:#fbeeec}
+input[type=text]{width:100%;max-width:300px;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;font:16px inherit;background:#fff}
+input.r{border-color:var(--ok);background:#eaf5ef}
+input.w{border-color:var(--no);background:#fbeeec}
+textarea{width:100%;min-height:130px;padding:12px;border:1px solid var(--line);
+  border-radius:9px;font:16px/1.6 inherit;background:#fff;resize:vertical}
+.fbk{margin-top:7px;font-size:14px;font-weight:600;display:none}
+.fbk.s{display:block}
+.fbk.ok{color:var(--ok)} .fbk.no{color:var(--no)}
+
+.bank{background:var(--gold-l);border:1px solid #e5c894;border-radius:10px;
+  padding:12px 14px;margin-bottom:16px}
+.bank b{display:block;margin-bottom:6px;font-size:12px;letter-spacing:.07em;
+  text-transform:uppercase;color:#6b5100}
+.bank span{display:inline-block;background:#fff;border:1px solid #e5c894;
+  border-radius:14px;padding:3px 10px;margin:3px 4px 3px 0;font-size:15px}
+
+.gaptext p{margin:0 0 12px}
+.gaptext input{max-width:190px;display:inline-block;padding:4px 9px;font-size:16px}
+
+/* групиране */
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;min-height:46px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:6px 13px;cursor:grab;font-size:15px;user-select:none}
+.chip.sel{background:var(--sky);color:#fff;border-color:var(--sky)}
+.bins{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:720px){.bins{grid-template-columns:repeat(3,1fr)}}
+.bin{border:2px dashed var(--line);border-radius:11px;padding:12px;min-height:112px;background:#fff}
+.bin h4{margin:0 0 8px;font:700 15px/1.3 inherit;color:var(--sky)}
+.bin .items{display:flex;flex-wrap:wrap;gap:6px}
+.bin.over{border-color:var(--gold);background:#fffaf0}
+
+/* бутони */
+button.b{font:inherit;cursor:pointer;border-radius:9px;border:1px solid transparent}
+.spk{background:var(--sky);color:#fff;padding:8px 15px;font-size:15px}
+.spk:hover{background:var(--sky2)}
+.nav2{background:#fff;border:1px solid var(--line);padding:9px 15px;font-size:16px}
+.main{background:var(--gold);color:#3b2d00;font-weight:700;padding:12px 24px;font-size:16px}
+.main:hover{background:#d3901f}
+.ghost{background:transparent;border:1px solid var(--sky);color:var(--sky);padding:12px 20px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* резултат */
+#res{display:none;margin-top:22px}
+#res.on{display:block}
+.score{background:var(--sky);color:#fff;border-radius:12px;padding:24px 20px}
+.big{font:700 44px/1 Georgia,serif;color:var(--gold)}
+.big small{font-size:19px;color:#cfe0ec}
+.bars{margin-top:20px;display:grid;gap:11px}
+.br{font-size:14px}
+.brt{display:flex;justify-content:space-between;margin-bottom:4px}
+.bar{height:9px;background:rgba(255,255,255,.17);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:5px;transition:width .5s}
+.adv{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--gold);
+  border-radius:10px;padding:17px 19px;margin-top:15px}
+.adv h3{font:700 17px/1.3 Georgia,serif;margin:0 0 9px}
+.relearn span{display:inline-block;background:#fbeeec;border:1px solid #e8b8b0;color:#8a2c21;
+  border-radius:14px;padding:3px 11px;margin:3px 5px 3px 0;font-size:14px;font-weight:600}
+footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px;line-height:1.7}
+ol.steps{padding-left:22px} ol.steps li{margin-bottom:9px}
+@media print{nav,.acts,.spk{display:none!important} section{display:block!important}}
+/* ---- запис на говора ---- */
+.rec{border:1px solid var(--line);border-radius:11px;padding:16px 16px 14px;background:#fff;margin-top:18px}
+.rec h4{margin:0 0 4px;font:700 17px/1.3 inherit;color:var(--sky)}
+.rec .sub{color:var(--mut);font-size:14px;margin-bottom:14px}
+.rec .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rec button{font:inherit;cursor:pointer;border-radius:9px;border:1px solid transparent;
+  padding:10px 18px;font-size:15px}
+.rec .go{background:#b23b2e;color:#fff}
+.rec .go:hover{background:#96311f}
+.rec .go.on{background:#7d2418}
+.rec .stop{background:var(--sky);color:#fff}
+.rec .clr{background:transparent;border:1px solid var(--line);color:var(--mut)}
+.rec button[disabled]{opacity:.4;cursor:default}
+.rec .dot{width:11px;height:11px;border-radius:50%;background:#b23b2e;display:none}
+.rec.recording .dot{display:inline-block;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.rec .time{font:600 15px/1 ui-monospace,monospace;color:var(--mut);min-width:52px}
+.rec .takes{margin-top:14px;display:grid;gap:9px}
+.take{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;background:var(--paper);flex-wrap:wrap}
+.take b{font-size:14px;color:var(--sky);min-width:64px}
+.take audio{flex:1;min-width:190px;height:34px}
+.take a{font-size:13px;color:var(--sky);text-decoration:none;font-weight:600}
+.take a:hover{text-decoration:underline}
+.take .x{background:none;border:none;color:var(--mut);cursor:pointer;font-size:17px;padding:0 4px}
+.rec .note{margin-top:12px;font-size:13px;color:var(--mut);line-height:1.5}
+.rec .err{margin-top:10px;font-size:14px;color:#b23b2e;display:none}
+.rec .err.on{display:block}
+
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <div class="kick">Module 1 · Lesson 1</div>
+  <h1>Unit 1 · Getting to know you
+    <small>Positive qualities · Negative qualities · Neither one nor the other</small></h1>
+</div></header>
+
+<nav id="nav"></nav>
+
+<div class="wrap">
+<!-- 1 КАРТИ -->
+<section id="s1">
+  <div class="card"><h2>Opening questions</h2><p>What is the first word you would use to describe yourself?</p><p>Think of a teacher you remember well. What kind of person was he or she?</p><p>Which is more important in a teacher - patience or knowledge? Why?</p><p class="hint"><b>Follow-up prompts:</b> What makes you say that? Can you give a recent example? What did this teacher do when someone made a mistake? Would your answer change for older students? Why?</p></div>
+  <div class="card">
+    <h2>Cards</h2>
+    <div><span class="tag">form and meaning</span><span class="tag">18 key words</span></div>
+    <p class="hint">Tap the card to turn it over. Listen to the pronunciation.</p>
+    <div class="flip" id="flip"><div class="fin">
+      <div class="fs"><div class="fw" id="cw"></div><div class="fl" id="cl"></div>
+        <div class="ctr" style="margin-top:14px"><button class="b spk" id="csp">🔊 Listen</button></div></div>
+      <div class="fs fb"><div class="fbg" id="cb"></div><div class="fex" id="ce"></div></div>
+    </div></div>
+    <div class="ctr">
+      <button class="b nav2" id="cprev">‹</button>
+      <span class="cnt" id="ccnt"></span>
+      <button class="b nav2" id="cnext">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- 2 ГРУПИРАНЕ -->
+<section id="s2">
+  <div class="card">
+    <h2>Sort the words</h2>
+    <div><span class="tag">meaning</span></div>
+    <p class="hint">Tap a word, then tap the box it belongs to.</p>
+    <div class="pool" id="pool"></div>
+    <div class="bins">
+      <div class="bin" data-g="0"><h4>Positive qualities</h4><div class="items"></div></div>
+      <div class="bin" data-g="1"><h4>Negative qualities</h4><div class="items"></div></div>
+      <div class="bin" data-g="2"><h4>Neither one nor the other</h4><div class="items"></div></div>
+    </div>
+    <div class="acts">
+      <button class="b main" id="gchk">Check</button>
+      <button class="b ghost" id="grst">Start again</button>
+    </div>
+    <div class="fbk" id="gfb"></div>
+  </div>
+</section>
+
+<!-- 3 СВЪРЗВАНЕ -->
+<section id="s3">
+  <div class="card">
+    <h2>Match word and definition</h2>
+    <div><span class="tag">meaning</span></div>
+    <p class="hint">Read the definition and choose the word.</p>
+    <div id="def"></div>
+  </div>
+</section>
+
+<!-- 4 ПОПЪЛВАНЕ -->
+<section id="s4">
+  <div class="card">
+    <h2>Gap-fill</h2>
+    <div><span class="tag">words in context</span></div>
+    <p class="hint">Complete the text. Use each word once. Gap (0) is a completed example and is not scored.</p>
+    <div class="bank"><b>Word bank</b><span>brave</span><span>carefree</span><span>considerate</span><span>generous</span><span>gullible</span><span>humble</span><span>loyal</span><span>respectful</span><span>selfish</span><span>self-confident</span></div>
+    <div class="gaptext" id="gap"></div>
+  </div>
+</section>
+
+<!-- 6 ПРОДУКЦИЯ -->
+<section id="s5">
+  <div class="card">
+    <h2>Speaking &amp; writing</h2>
+    <div><span class="tag">free production</span></div>
+    <p class="hint">Describe a colleague or a fellow student without saying who it is. Use at least five key words. The others guess who you mean. <b>Follow-up:</b> Can you describe a situation that shows one of these qualities?</p>
+    <textarea id="wr" placeholder="Write here…"></textarea>
+    <div id="wcount" style="font-size:14px;color:var(--mut);margin-top:6px"></div>
+    <p class="hint" style="margin-top:18px"><b>In pairs.</b> Your role cards and the full task are in the lesson materials for Unit 1.</p>
+
+    <div class="card" style="margin-top:18px"><h2>Work with the learning dictionary</h2><p>Team 1: Complete the “Module 1” tab in the shared dictionary with the Bulgarian meaning, CEFR level and your own example sentence for each item.</p><p>Core vocabulary: by the end of the week. Extended vocabulary: within two weeks. Team 26 checks the entries.</p></div>
+    <div class="rec" id="rec">
+      <h4>Record yourself</h4>
+      <div class="sub">Say your answer aloud, then listen back. Nothing leaves your device.</div>
+      <div class="row">
+        <button class="go" id="recGo">● Record</button>
+        <button class="stop" id="recStop" disabled>■ Stop</button>
+        <span class="dot"></span>
+        <span class="time" id="recTime">0:00</span>
+        <button class="clr" id="recClear">Clear all</button>
+      </div>
+      <div class="takes" id="recTakes"></div>
+      <div class="note">Tip: record the same task twice — once now and once at the end of the lesson — and compare the two.</div>
+      <div class="err" id="recErr"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 ТЕСТ -->
+<section id="s6">
+  <div class="card">
+    <h2>Test</h2>
+    <div><span class="tag">20 points</span></div>
+    <p class="hint">Spelling · meaning · collocation · recall.</p>
+    <h3 style="font:700 17px Georgia,serif;margin:18px 0 8px">1. Listen and choose the correct spelling</h3>
+    <div id="t1"></div>
+    <h3 style="font:700 17px Georgia,serif;margin:22px 0 8px">2. Meaning</h3>
+    <div id="t2"></div>
+    <h3 style="font:700 17px Georgia,serif;margin:22px 0 8px">3. Collocation</h3>
+    <div id="t3"></div>
+    <h3 style="font:700 17px Georgia,serif;margin:22px 0 8px">4. Recall — no options</h3>
+    <div id="t4"></div>
+    
+    <div class="acts">
+      <button class="b main" id="chk">Check the test</button>
+      <button class="b ghost" id="rst">Clear</button>
+    </div>
+    <div id="res">
+      <div class="score">
+        <div class="kick" style="color:var(--gold)">Score</div>
+        <div class="big"><span id="pts">0</span><small> / 20 points</small></div>
+        <div id="lvl" style="margin-top:8px;color:#cfe0ec"></div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="adv" id="adv"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- READING IN CONTEXT: additional formative activity; no change to final test -->
+<section id="s7">
+  <div class="card">
+    <h2>Reading in Context</h2>
+    <div><span class="tag">reading comprehension</span><span class="tag">18 key words in context</span></div>
+    <p class="hint">Read the text. Notice how personality adjectives describe people in a real situation. Then answer the questions.</p>
+    <h3 style="font:700 19px Georgia,serif">The Teacher Who Changed Our Class</h3>
+    <p>When Ms Carter joined our school, she looked rather <strong>serious</strong>. Some students thought she would be strict, but we soon discovered how <strong>considerate</strong> and <strong>generous</strong> she was with her time. She listened carefully and remained <strong>respectful</strong> even when we made mistakes. Although she was an <strong>intelligent</strong> and <strong>brilliant</strong> teacher, she was also <strong>humble</strong>: she never claimed to know everything.</p>
+    <p>Our class included very different personalities. Daniel was <strong>studious</strong> and worked hard, while Mia was <strong>imaginative</strong> and always suggested unusual stories. Leo was <strong>creative</strong> but sometimes <strong>stubborn</strong>; he refused to change his ideas. At first, I was rather <strong>gullible</strong> and believed every rumour about exams. My friend was more <strong>carefree</strong>, although that sometimes meant she forgot deadlines.</p>
+    <p>One day, our group project went wrong. A student made a <strong>selfish</strong> decision and kept important materials for himself. Ms Carter encouraged us to be <strong>brave</strong> enough to discuss the problem openly. She asked us to remain <strong>loyal</strong> to our team, not to our mistakes. When the computer stopped working, she was <strong>resourceful</strong> and turned the lesson into a lively discussion. By the end, even the quietest students felt <strong>self-confident</strong> enough to share their opinions. We learned that good character is shown through actions, not labels.</p>
+    <h3 style="font:700 18px Georgia,serif;margin-top:22px">Reading comprehension</h3>
+    <p class="hint">Choose the best answer. Check your answers for immediate feedback. This practice does not count towards the 20-point final test.</p>
+    <div id="readingQuiz"></div>
+    <div class="acts"><button class="b main" id="readingCheck" type="button">Check answers</button><button class="b ghost" id="readingReset" type="button">Try again</button></div>
+    <div class="fbk" id="readingFeedback" aria-live="polite"></div>
+    <h3 style="font:700 18px Georgia,serif;margin-top:24px">Discuss</h3>
+    <p>1. Which of Ms Carter's qualities would be most important for a primary-school teacher? Why?</p><p class="hint">Follow-up: Which quality would be hardest to develop?</p>
+    <p>2. Can a person be both self-confident and humble? Give an example.</p><p class="hint">Follow-up: How is self-confidence different from arrogance?</p>
+    <p>3. Describe a situation in which being resourceful helped someone solve a problem.</p><p class="hint">Follow-up: What other solution could have worked?</p>
+  </div>
+</section>
+
+<footer>Unit 1 · 69 vocabulary items, 18 of them key words</footer>
+</div>
+
+<script>
+/* ---------- ДАННИ ---------- */
+const CORE=[
+["humble","скромен","B2","My mentor never boasted about her results; she stayed humble to the end."],
+["brave","смел","A2","It takes a brave student to admit in front of the class that she has not understood."],
+["serious","сериозен","A2","He looks serious in the corridor, but his lessons are full of jokes."],
+["resourceful","находчив","B2","A resourceful teacher can turn a broken projector into a group discussion."],
+["stubborn","твърдоглав, инат","B1","My little brother is so stubborn that he refused to eat for a whole afternoon."],
+["loyal","лоялен, верен","B1","She has been loyal to that school for twenty-two years."],
+["gullible","лековерен, наивен","B2","I was gullible enough to believe the exam had been cancelled."],
+["selfish","егоистичен","B1","It felt selfish to take the last place on the course, but I took it."],
+["generous","щедър","B1","Our supervisor is generous with her time and reads every draft twice."],
+["self-confident","самоуверен","B1","After the first year of practice I finally felt self-confident in front of a class."],
+["respectful","почтителен, уважителен","B1","Be respectful towards the children even when they are not respectful towards you."],
+["considerate","тактичен, внимателен към другите","B2","A considerate colleague notices when you have had a difficult morning."],
+["imaginative","с богато въображение","B1","Imaginative pupils will invent an ending you never expected."],
+["brilliant","блестящ, изключително умен","A2","Her first lesson plan was brilliant, and she wrote it in one evening."],
+["creative","творчески, креативен","A2","The most creative answer came from the quietest boy in the room."],
+["carefree","безгрижен","B2","We had a carefree summer between school and university."],
+["studious","ученолюбив","B2","He is a studious young man who reads three books a month."],
+["intelligent","интелигентен","A2","An intelligent question is worth more than ten correct answers."]];
+
+const GROUPS=[
+ ["humble","brave","loyal","generous","respectful","considerate","imaginative","brilliant","creative","intelligent","studious","resourceful","self-confident"],
+ ["stubborn","gullible","selfish"],
+ ["serious","carefree"]];
+
+const DEFS=[
+ {q:"not thinking that you are better or more important than other people",o:["ambitious","humble","proud","self-confident"],a:1,k:"humble"},
+ {q:"good at finding quick and clever ways to solve problems",o:["imaginative","studious","resourceful","cautious"],a:2,k:"resourceful"},
+ {q:"too ready to believe what other people tell you",o:["gullible","honest","tolerant","loyal"],a:0,k:"gullible"},
+ {q:"careful about other people's feelings and needs",o:["serious","curious","brilliant","considerate"],a:3,k:"considerate"},
+ {q:"refusing to change your mind, even when you are clearly wrong",o:["determined","stubborn","strict","demanding"],a:1,k:"stubborn"},
+ {q:"spending a lot of time reading and studying, and enjoying it",o:["intelligent","ambitious","studious","brilliant"],a:2,k:"studious"},
+ {q:"thinking about yourself and not about other people",o:["selfish","serious","stubborn","carefree"],a:0,k:"selfish"}];
+const GAPS=[
+ ["My first mentor came from a ",1," background and never once mentioned it. She was ",2," with her time and read every lesson plan I wrote."],
+ ["She was also ",3," enough to tell the head teacher when a decision was wrong. Twenty-two years in the same school - nobody has ever been more ",4," to a place."],
+ ["In my first term I was ",5," about everything. A colleague told me the timetable had been cancelled and I believed him. I was ",6," in a way only a first-year teacher can be."],
+ ["She taught me three things. Be ",7," towards the children even when they are not. Notice when a colleague has had a difficult morning - that is what being ",8," means. And do not be ",9," with your knowledge; share it."],
+ ["By my third year I finally felt ",10," in front of a class. The carefree days of the first September were long gone."]];
+const GAPKEY=["humble","generous","brave","loyal","gullible","carefree","respectful","considerate","selfish","self-confident"];
+const T1=[
+ {w:"resourceful",o:["resourcefull","resourceful","resorceful","rescourceful"],a:1},
+ {w:"considerate",o:["considerate","considarate","consederate","considerete"],a:0},
+ {w:"gullible",o:["gullable","gulible","gullible","gullibel"],a:2},
+ {w:"imaginative",o:["imaginitive","imagenative","imaginativ","imaginative"],a:3}];
+const T2=[
+ {q:"not proud of yourself in front of others",o:["humble","serious","brilliant","carefree"],a:0,k:"humble"},
+ {q:"having a lot of new and original ideas",o:["studious","imaginative","loyal","stubborn"],a:1,k:"imaginative"},
+ {q:"always supporting the same person or place",o:["generous","selfish","loyal","brave"],a:2,k:"loyal"},
+ {q:"not worried about anything",o:["serious","carefree","respectful","intelligent"],a:1,k:"carefree"}];
+const T3=[
+ {q:"come from a ______ background",o:["humble","carefree","studious"],a:0,k:"humble"},
+ {q:"a quiet, ______ student",o:["generous","studious","loyal"],a:1,k:"studious"},
+ {q:"______ towards others",o:["intelligent","creative","considerate"],a:2,k:"considerate"},
+ {q:"a ______ problem-solver",o:["resourceful","gullible","carefree"],a:0,k:"resourceful"}];
+const T4=[{bg:"щедър",a:"generous"},{bg:"смел",a:"brave"},
+ {bg:"творчески",a:"creative"},{bg:"сериозен",a:"serious"}];
+
+/* ---------- НАВИГАЦИЯ ---------- */
+const TABS=["Cards","Reading","Sort","Match","Gap-fill","Speaking","Test"];
+const TAB_SECTIONS=[1,7,2,3,4,5,6];
+const nav=document.getElementById("nav");
+TABS.forEach((t,i)=>{
+  const b=document.createElement("button");
+  b.textContent=t; b.dataset.i=i+1; if(i===0)b.className="on";
+  b.onclick=()=>{
+    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("on"));
+    document.getElementById("s"+TAB_SECTIONS[i]).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+  nav.appendChild(b);
+});
+document.getElementById("s1").classList.add("on");
+
+/* Reading comprehension: independent formative practice */
+const READING_QUESTIONS=[
+ {q:"Why did some students initially misunderstand Ms Carter?",o:["She looked serious.","She never listened.","She refused to teach."],a:0},
+ {q:"What does Ms Carter's reaction to mistakes show?",o:["She is gullible.","She is respectful and considerate.","She is selfish."],a:1},
+ {q:"What problem did Leo sometimes have?",o:["He forgot deadlines.","He believed every rumour.","He refused to change his ideas."],a:2},
+ {q:"How did Ms Carter respond when the computer stopped working?",o:["She cancelled the lesson.","She organised a discussion.","She asked students to go home."],a:1},
+ {q:"What is the main message of the text?",o:["Good character is demonstrated by actions.","Intelligence matters more than kindness.","All students should have the same personality."],a:0}
+];
+function renderReading(){
+ const root=document.getElementById("readingQuiz");root.innerHTML="";
+ READING_QUESTIONS.forEach((q,i)=>{
+   const wrap=document.createElement("div");wrap.className="q";
+   const title=document.createElement("div");title.className="qt";title.textContent=(i+1)+". "+q.q;wrap.appendChild(title);
+   const options=document.createElement("div");options.className="opts";
+   q.o.forEach((answer,j)=>{
+     const label=document.createElement("label");label.className="opt";
+     const radio=document.createElement("input");radio.type="radio";radio.name="reading"+i;radio.value=j;
+     label.appendChild(radio);label.appendChild(document.createTextNode(answer));options.appendChild(label);
+   });wrap.appendChild(options);root.appendChild(wrap);
+ });
+ const fb=document.getElementById("readingFeedback");fb.className="fbk";fb.textContent="";
+}
+renderReading();
+document.getElementById("readingCheck").onclick=()=>{
+ let correct=0;let answered=0;
+ READING_QUESTIONS.forEach((q,i)=>{
+  const checked=document.querySelector('input[name="reading'+i+'"]:checked');
+  if(checked){answered++;if(Number(checked.value)===q.a)correct++;}
+  document.querySelectorAll('input[name="reading'+i+'"]').forEach(el=>{
+   el.parentElement.classList.remove("r","w");
+   if(Number(el.value)===q.a)el.parentElement.classList.add("r");
+   else if(el.checked)el.parentElement.classList.add("w");
+  });
+ });
+ const fb=document.getElementById("readingFeedback");fb.className="fbk s "+(correct===5?"ok":"no");
+ fb.textContent="Score: "+correct+" / 5. "+(answered<5?"Answer all five questions and try again.":correct===5?"Excellent! All answers are correct.":"Review the highlighted correct answers and try again.");
+};
+document.getElementById("readingReset").onclick=renderReading;
+
+function speak(w){
+  try{speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(w);u.lang="en-GB";u.rate=.85;
+    speechSynthesis.speak(u);}catch(e){}
+}
+
+/* ---------- КАРТИ ---------- */
+let ci=0;
+const flip=document.getElementById("flip");
+function showCard(){
+  const c=CORE[ci];
+  document.getElementById("cw").textContent=c[0];
+  document.getElementById("cl").textContent=c[2];
+  document.getElementById("cb").textContent=c[1];
+  document.getElementById("ce").textContent=c[3];
+  document.getElementById("ccnt").textContent=(ci+1)+" / "+CORE.length;
+  flip.classList.remove("f");
+}
+flip.onclick=e=>{ if(!e.target.closest(".spk")) flip.classList.toggle("f"); };
+document.getElementById("csp").onclick=e=>{e.stopPropagation();speak(CORE[ci][0]);};
+document.getElementById("cprev").onclick=()=>{ci=(ci-1+CORE.length)%CORE.length;showCard();};
+document.getElementById("cnext").onclick=()=>{ci=(ci+1)%CORE.length;showCard();};
+showCard();
+
+/* ---------- ГРУПИРАНЕ ---------- */
+const pool=document.getElementById("pool");
+let sel=null;
+function buildPool(){
+  pool.innerHTML="";
+  const all=GROUPS.flat().slice().sort(()=>Math.random()-.5);
+  all.forEach(w=>{
+    const c=document.createElement("div");
+    c.className="chip"; c.textContent=w;
+    c.onclick=()=>{
+      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));
+      c.classList.add("sel"); sel=c;
+    };
+    pool.appendChild(c);
+  });
+  document.querySelectorAll(".bin .items").forEach(b=>b.innerHTML="");
+}
+document.querySelectorAll(".bin").forEach(bin=>{
+  bin.onclick=()=>{ if(sel){ bin.querySelector(".items").appendChild(sel);
+    sel.classList.remove("sel"); sel=null; } };
+});
+document.getElementById("grst").onclick=buildPool;
+document.getElementById("gchk").onclick=()=>{
+  let ok=0,tot=0;
+  document.querySelectorAll(".bin").forEach(bin=>{
+    const g=+bin.dataset.g;
+    bin.querySelectorAll(".items .chip").forEach(c=>{
+      tot++;
+      if(GROUPS[g].includes(c.textContent)){ok++;c.style.background="#eaf5ef";c.style.borderColor="#2e7d55";}
+      else {c.style.background="#fbeeec";c.style.borderColor="#b23b2e";}
+    });
+  });
+  const f=document.getElementById("gfb");
+  f.className="fbk s "+(ok===18?"ok":"no");
+  f.textContent = tot===0 ? "No words sorted yet."
+    : `${ok} of ${tot} correct. ${18-tot} still in the list.`;
+};
+buildPool();
+
+/* ---------- ОБЩИ ГРАДИТЕЛИ ---------- */
+function mc(host,list,name,audio){
+  const box=document.getElementById(host);
+  list.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="q";
+    d.innerHTML='<div class="qt"><span class="n">'+(i+1)+'.</span>'+
+      (audio?'<button class="b spk" data-w="'+it.w+'">🔊 Listen</button>':it.q)+
+      '</div><div class="opts"></div><div class="fbk"></div>';
+    const o=d.querySelector(".opts");
+    it.o.forEach((t,j)=>{
+      const l=document.createElement("label"); l.className="opt";
+      l.innerHTML='<input type="radio" name="'+name+i+'" value="'+j+'"><span>'+t+'</span>';
+      o.appendChild(l);
+    });
+    box.appendChild(d);
+  });
+}
+function recall(host,list,name){
+  const box=document.getElementById(host);
+  list.forEach((it,i)=>{
+    const mask=it.a[0]+it.a.slice(1).replace(/[a-z]/g,"_");
+    const d=document.createElement("div"); d.className="q";
+    d.innerHTML='<div class="qt"><span class="n">'+(i+1)+'.</span>'+it.bg+
+      ' &nbsp;<span style="font-family:monospace;letter-spacing:3px;color:#6f6a60">'+mask+'</span></div>'+
+      '<input type="text" id="'+name+i+'" autocomplete="off" spellcheck="false" placeholder="your answer">'+
+      '<div class="fbk"></div>';
+    box.appendChild(d);
+  });
+}
+document.addEventListener("click",e=>{const b=e.target.closest(".spk[data-w]");if(b)speak(b.dataset.w);});
+
+/* ---------- СВЪРЗВАНЕ ---------- */
+mc("def",DEFS,"d",false);
+document.getElementById("def").insertAdjacentHTML("beforeend",
+  '<div class="acts"><button class="b main" id="dchk">Check</button></div>');
+document.getElementById("dchk").onclick=()=>{
+  let s=0;
+  DEFS.forEach((it,i)=>{
+    const n=document.getElementsByName("d"+i);
+    const f=n[0].closest(".q").querySelector(".fbk");
+    let pk=-1; n.forEach((x,j)=>{if(x.checked)pk=j;});
+    n.forEach((x,j)=>{const l=x.closest(".opt");l.classList.remove("r","w");
+      if(j===it.a)l.classList.add("r"); else if(j===pk)l.classList.add("w");});
+    f.className="fbk s "+(pk===it.a?"ok":"no");
+    f.textContent = pk===it.a ? "Correct." : "Answer: "+it.k;
+    if(pk===it.a)s++;
+  });
+};
+
+/* ---------- ПОПЪЛВАНЕ ---------- */
+const gap=document.getElementById("gap");
+let gn=0;
+GAPS.forEach(par=>{
+  const el=document.createElement("p");
+  par.forEach(seg=>{
+    if(typeof seg==="string") el.appendChild(document.createTextNode(seg));
+    else{ const inp=document.createElement("input");
+      inp.type="text"; inp.id="g"+(seg-1); inp.autocomplete="off"; inp.spellcheck=false;
+      inp.placeholder="("+seg+")"; el.appendChild(inp); }
+  });
+  gap.appendChild(el);
+});
+gap.lastElementChild.innerHTML = gap.lastElementChild.innerHTML.replace("The carefree days", "The <strong>carefree (0)</strong> days");
+gap.insertAdjacentHTML("beforeend",
+  '<div class="acts"><button class="b main" id="gapchk">Check</button></div><div class="fbk" id="gapfb"></div>');
+document.getElementById("gapchk").onclick=()=>{
+  let s=0;
+  GAPKEY.forEach((k,i)=>{
+    const inp=document.getElementById("g"+i);
+    const v=(inp.value||"").toLowerCase().trim().replace(/\s+/g," ");
+    inp.classList.remove("r","w");
+    if(v===k){s++;inp.classList.add("r");} else inp.classList.add("w");
+  });
+  const f=document.getElementById("gapfb");
+  f.className="fbk s "+(s===10?"ok":"no");
+  f.textContent=`${s} of 10 correct.`+(s<10?" Wrong answers are marked in red.":"");
+};
+
+/* ---------- СЛУШАНЕ ---------- */
+
+/* ---------- ПРОДУКЦИЯ ---------- */
+const wr=document.getElementById("wr");
+wr.addEventListener("input",()=>{
+  const words=wr.value.trim().split(/\s+/).filter(Boolean).length;
+  const low=" "+wr.value.toLowerCase()+" ";
+  const used=CORE.filter(c=>low.includes(c[0].toLowerCase())).length;
+  document.getElementById("wcount").textContent=
+    `Words: ${words} · key words used: ${used} of 18`+(used>=5?" ✓":"");
+});
+
+/* ---------- ТЕСТ ---------- */
+mc("t1",T1,"a",true); mc("t2",T2,"b",false);
+mc("t3",T3,"c",false); recall("t4",T4,"d4"); 
+
+function markMC(list,name,missed){
+  let s=0;
+  list.forEach((it,i)=>{
+    const n=document.getElementsByName(name+i);
+    const f=n[0].closest(".q").querySelector(".fbk");
+    let pk=-1; n.forEach((x,j)=>{if(x.checked)pk=j;});
+    n.forEach((x,j)=>{const l=x.closest(".opt");l.classList.remove("r","w");
+      if(j===it.a)l.classList.add("r"); else if(j===pk)l.classList.add("w");});
+    f.classList.add("s");
+    const ans=it.w||it.k||it.o[it.a];
+    if(pk===it.a){s++;f.className="fbk s ok";f.textContent="Correct.";}
+    else{f.className="fbk s no";f.textContent=(pk===-1?"No answer. ":"")+"Answer: "+ans;missed.push(ans);}
+  });
+  return s;
+}
+function markTxt(list,name,missed){
+  let s=0;
+  list.forEach((it,i)=>{
+    const inp=document.getElementById(name+i);
+    const f=inp.closest(".q").querySelector(".fbk");
+    const v=(inp.value||"").toLowerCase().trim();
+    inp.classList.remove("r","w"); f.classList.add("s");
+    if(v===it.a){s++;inp.classList.add("r");f.className="fbk s ok";f.textContent="Correct.";}
+    else{inp.classList.add("w");f.className="fbk s no";f.textContent="Answer: "+it.a;missed.push(it.a);}
+  });
+  return s;
+}
+const AREAS=[["Spelling","f",4],["Meaning","m",4],["Collocation","c",4],["Recall","r",8]];
+const TIPS={f:"Go back to Cards and listen to each word before you write it.",
+ m:"Work with the English definitions in Match, not with the translation.",
+ c:"Write the whole phrase in your dictionary, not just the single word.",
+ r:"Close the dictionary and recall the words from the translation. Repeat after one day and after three days.",
+ s:"Revise the words from this unit."};
+
+document.getElementById("chk").onclick=()=>{
+  const missed=[];
+  const g={f:markMC(T1,"a",missed),m:markMC(T2,"b",missed),c:markMC(T3,"c",missed),
+           r:markTxt(T4,"d4",missed)*2};
+  const tot=g.f+g.m+g.c+g.r;
+  document.getElementById("pts").textContent=tot;
+  let lvl;
+  if(g.f+g.m<6) lvl="Keep working on the form and the meaning of the words.";
+  else if(g.c<3) lvl="You recognise the words. Now work on how they combine with others.";
+  else if(g.r<6) lvl="Good understanding. Practise recalling the words without help.";
+  else lvl="Excellent. You use these words confidently and on your own.";
+  document.getElementById("lvl").textContent=lvl;
+  const bars=document.getElementById("bars"); bars.innerHTML="";
+  AREAS.forEach(([nm,k,mx])=>{
+    const pct=Math.round(g[k]/mx*100);
+    bars.insertAdjacentHTML("beforeend",
+      '<div class="br"><div class="brt"><span>'+nm+'</span><span>'+g[k]+'/'+mx+'</span></div>'+
+      '<div class="bar"><i style="width:'+pct+'%"></i></div></div>');
+  });
+  const weak=AREAS.filter(([,k,mx])=>g[k]/mx<0.7);
+  let h='<h3>What next</h3>';
+  h += weak.length
+    ? '<ul>'+weak.map(([nm,k])=>'<li><b>'+nm+':</b> '+TIPS[k]+'</li>').join("")+'</ul>'
+    : '<p>Every area is above 70%. Mark these words for revision in one week.</p>';
+  const uq=[...new Set(missed)];
+  if(uq.length) h+='<div class="relearn" style="margin-top:12px"><b>Revise these words:</b><br>'+
+    uq.map(w=>'<span>'+w+'</span>').join("")+'</div>';
+  document.getElementById("adv").innerHTML=h;
+  const r=document.getElementById("res"); r.classList.add("on");
+  r.scrollIntoView({behavior:"smooth",block:"start"});
+};
+document.getElementById("rst").onclick=()=>{
+  document.querySelectorAll("#s6 input[type=radio]").forEach(n=>n.checked=false);
+  document.querySelectorAll("#s6 input[type=text]").forEach(n=>{n.value="";n.classList.remove("r","w")});
+  document.querySelectorAll("#s6 .opt").forEach(l=>l.classList.remove("r","w"));
+  document.querySelectorAll("#s6 .fbk").forEach(f=>{f.className="fbk";f.textContent=""});
+  document.getElementById("res").classList.remove("on");
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+/* ---------- ЗАПИС НА ГОВОРА ---------- */
+(function(){
+  const box=document.getElementById("rec"); if(!box) return;
+  const goB=document.getElementById("recGo"), stopB=document.getElementById("recStop"),
+        clrB=document.getElementById("recClear"), timeEl=document.getElementById("recTime"),
+        takesEl=document.getElementById("recTakes"), errEl=document.getElementById("recErr");
+  let rec=null, chunks=[], stream=null, t0=0, timer=null, n=0;
+
+  function fail(msg){ errEl.textContent=msg; errEl.classList.add("on"); }
+  function tick(){
+    const s=Math.floor((Date.now()-t0)/1000);
+    timeEl.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+  }
+  if(!navigator.mediaDevices || !window.MediaRecorder){
+    goB.disabled=true;
+    fail("This browser cannot record audio. Chrome, Edge or Firefox will work.");
+    return;
+  }
+  goB.addEventListener("click", async ()=>{
+    errEl.classList.remove("on");
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    }catch(e){
+      fail("No access to the microphone. Allow it in the address bar and try again.");
+      return;
+    }
+    chunks=[];
+    try{ rec=new MediaRecorder(stream); }
+    catch(e){ fail("Recording is not supported here."); return; }
+    rec.ondataavailable=e=>{ if(e.data.size) chunks.push(e.data); };
+    rec.onstop=()=>{
+      const blob=new Blob(chunks,{type:rec.mimeType||"audio/webm"});
+      const url=URL.createObjectURL(blob);
+      n++;
+      const d=document.createElement("div");
+      d.className="take";
+      d.innerHTML='<b>Take '+n+'</b>';
+      const a=document.createElement("audio"); a.controls=true; a.src=url;
+      const dl=document.createElement("a");
+      dl.href=url; dl.download="take-"+n+".webm"; dl.textContent="Save";
+      const x=document.createElement("button");
+      x.className="x"; x.textContent="✕"; x.title="Delete this take";
+      x.onclick=()=>{ URL.revokeObjectURL(url); d.remove(); };
+      d.append(a,dl,x);
+      takesEl.prepend(d);
+      stream.getTracks().forEach(t=>t.stop());
+      box.classList.remove("recording");
+      goB.classList.remove("on"); goB.disabled=false; stopB.disabled=true;
+      clearInterval(timer); timeEl.textContent="0:00";
+    };
+    rec.start();
+    box.classList.add("recording");
+    goB.classList.add("on"); goB.disabled=true; stopB.disabled=false;
+    t0=Date.now(); tick(); timer=setInterval(tick,250);
+  });
+  stopB.addEventListener("click",()=>{ if(rec && rec.state==="recording") rec.stop(); });
+  clrB.addEventListener("click",()=>{
+    takesEl.querySelectorAll("audio").forEach(a=>URL.revokeObjectURL(a.src));
+    takesEl.innerHTML=""; n=0;
+  });
+})();
+
+</script>
+</body>
+</html>
