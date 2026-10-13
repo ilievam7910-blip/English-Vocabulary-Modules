@@ -70,6 +70,10 @@ textarea{width:100%;min-height:130px;padding:12px;border:1px solid var(--line);
   border-radius:9px;font:16px/1.6 inherit;background:#fff;resize:vertical}
 .fbk{margin-top:7px;font-size:14px;font-weight:600;display:none}
 .fbk.s{display:block}
+.answer-note{font-size:14px;margin-top:6px;color:var(--mut)}
+.chip.r{background:#eaf5ef;border-color:var(--ok)}
+.chip.w{background:#fbeeec;border-color:var(--no)}
+#gap .gap-answer{display:inline-block;font-size:13px;color:var(--no);margin-left:5px;font-weight:600}
 .fbk.ok{color:var(--ok)} .fbk.no{color:var(--no)}
 
 .bank{background:var(--gold-l);border:1px solid #e5c894;border-radius:10px;
@@ -200,9 +204,9 @@ ol.steps{padding-left:22px} ol.steps li{margin-bottom:9px}
     </div>
     <div class="acts">
       <button class="b main" id="gchk">Check</button>
-      <button class="b ghost" id="grst">Start again</button>
+      <button class="b ghost" id="grst">Try again</button>
     </div>
-    <div class="fbk" id="gfb"></div>
+    <div class="fbk" id="gfb" aria-live="polite"></div><div class="answer-note" id="gdetails" aria-live="polite"></div>
   </div>
 </section>
 
@@ -474,7 +478,12 @@ document.querySelectorAll(".bin").forEach(bin=>{
   bin.onclick=()=>{ if(sel){ bin.querySelector(".items").appendChild(sel);
     sel.classList.remove("sel"); sel=null; } };
 });
-document.getElementById("grst").onclick=buildPool;
+document.getElementById("grst").onclick=()=>{
+  buildPool(); document.querySelectorAll(".chip").forEach(c=>c.classList.remove("r","w"));
+  document.getElementById("gfb").className="fbk";
+  document.getElementById("gfb").textContent="";
+  document.getElementById("gdetails").textContent="";
+};
 document.getElementById("gchk").onclick=()=>{
   let ok=0,tot=0;
   document.querySelectorAll(".bin").forEach(bin=>{
@@ -526,7 +535,7 @@ document.addEventListener("click",e=>{const b=e.target.closest(".spk[data-w]");i
 /* ---------- СВЪРЗВАНЕ ---------- */
 mc("def",DEFS,"d",false);
 document.getElementById("def").insertAdjacentHTML("beforeend",
-  '<div class="acts"><button class="b main" id="dchk">Check</button></div>');
+  '<div class="acts"><button class="b main" id="dchk">Check</button><button class="b ghost" id="drst">Try again</button></div><div class="fbk" id="dsummary" aria-live="polite"></div>');
 document.getElementById("dchk").onclick=()=>{
   let s=0;
   DEFS.forEach((it,i)=>{
@@ -556,7 +565,7 @@ GAPS.forEach(par=>{
 });
 gap.lastElementChild.innerHTML = gap.lastElementChild.innerHTML.replace("The carefree days", "The <strong>carefree (0)</strong> days");
 gap.insertAdjacentHTML("beforeend",
-  '<div class="acts"><button class="b main" id="gapchk">Check</button></div><div class="fbk" id="gapfb"></div>');
+  '<div class="acts"><button class="b main" id="gapchk">Check</button><button class="b ghost" id="gaprst">Try again</button></div><div class="fbk" id="gapfb" aria-live="polite"></div>');
 document.getElementById("gapchk").onclick=()=>{
   let s=0;
   GAPKEY.forEach((k,i)=>{
